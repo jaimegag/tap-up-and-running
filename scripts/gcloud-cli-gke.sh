@@ -9,7 +9,7 @@ kubectl create clusterrolebinding tap-psp-rolebinding --group=system:authenticat
 
 # GCR
 # 
-# Create Service Acccount gcr-admin@fe-jaguilar.iam.gserviceaccount.com	gcr-admin with Permissions: "Storage Admin", "Storage Object Creator", "Storage Object Viewer"
+# Create Service Acccount with Permissions: "Storage Admin", "Storage Object Creator", "Storage Object Viewer"
 # Save keys, to be passed to TBS
 #
 # Test local access
