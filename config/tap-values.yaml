@@ -1,0 +1,51 @@
+profile: full
+ceip_policy_disclosed: true # Installation fails if this not set to `true`
+buildservice:
+  kp_default_repository: "gcr.io/fe-jaguilar/build-service"
+  kp_default_repository_username: _json_key
+  kp_default_repository_password: |-
+    REDACTED
+  tanzunet_username: "jaguilar@pivotal.io"
+  tanzunet_password: REDACTED
+  descriptor_name: "tap-1.0.0-full"
+  enable_automatic_dependency_updates: true
+#supply_chain: basic
+#supply_chain: testing
+supply_chain: testing_scanning
+#ootb_supply_chain_basic:
+#ootb_supply_chain_testing:
+ootb_supply_chain_testing_scanning:
+  registry:
+    server: "gcr.io"
+    repository: "fe-jaguilar/supply-chain"
+  gitops:
+    ssh_secret: ""
+learningcenter:
+  ingressDomain: "tap.tap-gke-lab.hyrulelab.com"
+tap_gui:
+  service_type: ClusterIP
+  ingressEnabled: "true"
+  ingressDomain: "tap.tap-gke-lab.hyrulelab.com"
+  app_config:
+    app:
+      baseUrl: http://tap-gui.tap.tap-gke-lab.hyrulelab.com
+    catalog:
+      locations:
+        - type: url
+          target: https://github.com/jaimegag/tap-zone/blob/main/tap-gui/blank/catalog-info.yaml
+    backend:
+      baseUrl: http://tap-gui.tap.tap-gke-lab.hyrulelab.com
+      cors:
+        origin: http://tap-gui.tap.tap-gke-lab.hyrulelab.com
+metadata_store:
+  app_service_type: LoadBalancer # (optional) Defaults to LoadBalancer. Change to NodePort for distributions that don't support LoadBalancer
+grype:
+  namespace: "default" # (optional) Defaults to default namespace.
+  targetImagePullSecret: "registry-credentials"
+contour:
+  envoy:
+    service:
+      type: LoadBalancer
+cnrs:
+  domain_name: tap.tap-gke-lab.hyrulelab.com
+  domain_template: "{{.Name}}.{{.Namespace}}.{{.Domain}}"

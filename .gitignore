@@ -1,0 +1,5 @@
+.DS_Store
+local-config/*
+!local-config/.gitkeep
+tanzu-cluster-essentials
+tanzu-cluster-essentials*.tgz
