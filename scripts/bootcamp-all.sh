@@ -71,9 +71,9 @@ kubectl get packages -n tap-install
 #
 # Installs TAP packages
 #
-tanzu package install tap -p tap.tanzu.vmware.com -v $TAP_VERSION --values-file ./connfig/excludeall-tap-values.yaml -n tap-install 
+tanzu package install tap -p tap.tanzu.vmware.com -v $TAP_VERSION --values-file ./config/excludeall-tap-values.yaml -n tap-install 
 # watch progress with tap and tap-telemetry packages
-watch tanzu package installed list -n tap-install
+tanzu package installed list -n tap-install
 
 #
 # Inspect Tanzu packages
@@ -88,7 +88,14 @@ kubectl get packageinstalls -n tap-install
 #
 tanzu package installed update tap -p tap.tanzu.vmware.com -v $TAP_VERSION --values-file ./config/contouronly-tap-values.yaml -n tap-install
 # watch progress with cert-manager and contour packages
-watch tanzu package installed list -n tap-install
+tanzu package installed list -n tap-install
+#
+# Get Envoy EXTERNAL-IP
+kubectl get svc envoy -n tanzu-system-ingress
+# Update your DNS configuration
+#   Create wildcard A record using the ingress fqdn from your tap-values.yam.
+#   Example: *.tap.tap-gke-lab.hyrulelab.com -> Envoy EXTERNAL-IP
+
 
 #
 # Updates Tanzu package to deploy everything else
@@ -103,7 +110,7 @@ yq e -i '.buildservice.tanzunet_password = strenv(TANZU_NET_PASSWORD)' ./local-c
 #
 tanzu package installed update tap -p tap.tanzu.vmware.com -v $TAP_VERSION --values-file ./local-config/tap-values.yaml -n tap-install
 # watch progress with cert-manager and contour packages
-watch tanzu package installed list -n tap-install
+tanzu package installed list -n tap-install
 
 #
 # Troubleshoot Tanzu package reconciliation errors
@@ -132,14 +139,16 @@ tanzu secret registry add registry-credentials \
 #
 # Create namespace RBAC and secret
 kubectl apply -n default -f ./config/workload-ns-setup.yaml
+# Check secrets. Notice the tap-registry secret was exported to our dev namespace
+kubectl get secrets
 
 #
 # Import workload backstage catalog info into TAP gui
 # 
-1. Log into TAP GUI
-2. on the software catalog page click on the register button
-3. use https://github.com/jaimegag/tanzu-java-web-app/blob/main/catalog-info.yaml for the url in the form
-4. follow the rest of the instructions in the wizard
+# 1. Log into TAP GUI using the url defined in your tap-values.yaml file. Example: http://tap-gui.tap.tap-gke-lab.hyrulelab.com
+# 2. on the software catalog page click on the register button
+# 3. use https://github.com/jaimegag/tanzu-java-web-app/blob/main/catalog-info.yaml for the url in the form
+# 4. follow the rest of the instructions in the wizard
 
 #
 # Deploy the workload
