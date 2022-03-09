@@ -161,6 +161,14 @@ tanzu apps workload get tanzu-java-web-app
 tanzu apps workload tail tanzu-java-web-app --since 1h
 
 #
+# EXpose API Portal
+#
+# Deploy httpproxy config
+kubectl apply -f config/api-portal-httpproxy.yaml
+# Access FQDN when httpproxy STATUS is valid. E.g: http://api-portal.tap.tap-gke-lab.hyrulelab.com
+kubectl get po,svc,httpproxy -n api-portal
+
+#
 # Supply chains insights
 #
 # Check supply chain from recent workload deployed
