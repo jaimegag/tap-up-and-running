@@ -9,12 +9,12 @@ buildservice:
   tanzunet_password: REDACTED
   descriptor_name: "tap-1.0.0-full"
   enable_automatic_dependency_updates: true
-#supply_chain: basic
+supply_chain: basic
 #supply_chain: testing
-supply_chain: testing_scanning
-#ootb_supply_chain_basic:
+#supply_chain: testing_scanning
+ootb_supply_chain_basic:
 #ootb_supply_chain_testing:
-ootb_supply_chain_testing_scanning:
+#ootb_supply_chain_testing_scanning:
   registry:
     server: "gcr.io"
     repository: "fe-jaguilar/supply-chain"
