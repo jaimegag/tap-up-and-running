@@ -136,6 +136,8 @@ tanzu secret registry add registry-credentials \
   --server ${APPS_REGISTRY_HOSTNAME} \
   --username ${APPS_REGISTRY_USERNAME} --password-file ${APPS_REGISTRY_PASSWORD_FILE} \
   --namespace default
+# Note: The above example works for GCR because we have a json file based credentials. For other registries you'd pass a string in a `--password` param instead
+
 #
 # Create namespace RBAC and secret
 kubectl apply -n default -f ./config/workload-ns-setup.yaml
